@@ -1,3 +1,6 @@
+# firebase functions related
+node_modules
+
 # Miscellaneous
 *.class
 *.lock
