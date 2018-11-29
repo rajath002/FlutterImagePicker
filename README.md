@@ -1,6 +1,6 @@
 # myfluttercamera
 
-A new Flutter project.
+Flutter project to use camera and Gallery
 
 ## Getting Started
 
