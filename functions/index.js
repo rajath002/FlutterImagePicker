@@ -42,6 +42,9 @@ exports.storeImage = functions.https.onRequest((req, res) => {
         let oldImagePath;
 
         busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+
+            console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
+
             // tmpdir() - will give the temperory directory to store the files
             // then we store a file in there
             const filePath = path.join(os.tmpdir(), filename); 
