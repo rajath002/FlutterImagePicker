@@ -1,5 +1,6 @@
 # firebase functions related
-node_modules
+node_modules/
+**/node_modules/flutter-project.json
 
 # Miscellaneous
 *.class
