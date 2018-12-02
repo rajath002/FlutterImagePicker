@@ -41,7 +41,8 @@ const gcconfig = {
  *  this will configure the google cloud storage
  *  we use the admin permission set basically
  */
-const gcs = require('@google-cloud/storage')(gcconfig);
+
+// const gcs = require('@google-cloud/storage')(gcconfig);
 
 /** Authenticating the app
  *  initializeApp()         -> To initialize all cloud functions in 'fbAdmin'.
@@ -146,7 +147,7 @@ exports.storeImage = functions.https.onRequest((req, res) => {
              * bucket()  -> it is like a folder in your storage.
              * 'flutter-project-fd91b.appspot.com' -> value (bucket name) copied from the firebase storage.
              */
-            const bucket = gcs.bucket('flutter-project-fd91b.appspot.com');
+            const bucket = fbAdmin.storage().bucket('flutter-project-fd91b.appspot.com');//gcs.bucket('flutter-project-fd91b.appspot.com');
 
             // uuid() -> used to generate the 'unique id'
             const id = uuid();
