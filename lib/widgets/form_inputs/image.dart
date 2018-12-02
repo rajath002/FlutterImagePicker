@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mime/mime.dart';
+import 'package:http_parser/http_parser.dart';
 
 class ImageInput extends StatefulWidget {
   @override
@@ -19,6 +22,35 @@ class _ImageInputState extends State<ImageInput> {
         _image = image;
       });
     });
+  }
+
+  void _setImage(File image){
+
+  }
+
+  Future<Map<String, String>> uploadImage(File image, {String imagePath}) async {
+    // image.path -> this path is the path where your image stored in your device.
+    final mimeTypeData = lookupMimeType(image.path).split('/');
+
+    final imageUploadRequest = http.MultipartRequest('POST', 
+      Uri.parse('https://us-central1-flutter-project-fd91b.cloudfunctions.net/storeImage'));
+    final file = await http.MultipartFile.fromPath(
+      'image', 
+      image.path, 
+      contentType: MediaType( 
+        mimeTypeData[0], 
+        mimeTypeData[1]
+        )
+      );
+
+    imageUploadRequest.files.add(file);
+
+    if (imagePath != null){
+      imageUploadRequest.fields['imagePath'] = Uri.encodeComponent(imagePath);
+      
+
+    }
+
   }
 
   void _openImagePicker(BuildContext context) {
@@ -57,7 +89,8 @@ class _ImageInputState extends State<ImageInput> {
               ],
             ),
           );
-        });
+        }
+      );
   }
 
   @override
@@ -96,7 +129,6 @@ class _ImageInputState extends State<ImageInput> {
           fit: BoxFit.cover,
           height: 300,
           width: MediaQuery.of(context).size.width,
-          
         )
       ],
     );
